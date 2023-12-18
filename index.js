@@ -4,6 +4,7 @@ import cors from "cors";
 import moviesRouter from "./api/movies";
 import usersRouter from "./api/users";
 import "./db";
+import "./seedData";
 import authenticate from "./authenticate";
 import defaultErrHandler from "./errHandler";
 
@@ -20,6 +21,8 @@ app.use("/api/movies", moviesRouter);
 
 app.use(defaultErrHandler);
 
-app.listen(port, () => {
+let server = app.listen(port, () => {
   console.info(`Server running at ${port}`);
 });
+
+module.exports = server;
