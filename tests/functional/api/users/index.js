@@ -67,10 +67,10 @@ describe("Users endpoint", () => {
             .post("/api/users?action=register")
             .send({
               username: "user3",
-              password: "test3",
+              password: "test123@",
             })
             .expect(201)
-            .expect({ msg: "Successful created new user.", code: 201 });
+            .expect({ msg: "User successfully created.", success: true });
         });
         after(() => {
           return request(api)
@@ -92,7 +92,7 @@ describe("Users endpoint", () => {
             .post("/api/users?action=authenticate")
             .send({
               username: "user1",
-              password: "test1",
+              password: "test123@",
             })
             .expect(200)
             .then((res) => {

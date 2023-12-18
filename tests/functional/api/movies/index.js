@@ -43,8 +43,8 @@ describe("Movies endpoint", () => {
         .set("Accept", "application/json")
         .expect(200)
         .end((err, res) => {
-          expect(res.body).to.be.a("array");
-          expect(res.body.length).to.equal(20);
+          expect(res.body.results).to.be.a("array");
+          expect(res.body.results.length).to.equal(20);
           done();
         });
     });
@@ -70,7 +70,7 @@ describe("Movies endpoint", () => {
           .expect(404)
           .expect({
             status_code: 404,
-            message: "The resource you requested could not be found.",
+            message: "The movie you requested could not be found.",
           });
       });
     });
