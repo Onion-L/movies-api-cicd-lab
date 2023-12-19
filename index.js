@@ -5,7 +5,7 @@ import moviesRouter from "./api/movies";
 import usersRouter from "./api/users";
 import "./db";
 import "./seedData";
-import authenticate from "./authenticate";
+// import authenticate from "./authenticate";
 import defaultErrHandler from "./errHandler";
 
 dotenv.config();

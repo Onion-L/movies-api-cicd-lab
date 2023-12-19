@@ -76,3 +76,27 @@ describe("Movies endpoint", () => {
     });
   });
 });
+
+describe("GET /api/movies/tmdb/upcoming", () => {
+  it("should return upcoming movies and a status 200", () => {
+    request(api)
+      .get("/api/movies/tmdb/upcoming")
+      .set("Accept", "application/json")
+      .expect(200)
+      .then((err, res) => {
+        expect(res.body).to.be.an("array");
+      });
+  });
+});
+
+describe("GET /api/movies/tmdb/genres", () => {
+  it("should return movie genres and a status 200", () => {
+    request(api)
+      .get("/api/movies/tmdb/genres")
+      .set("Accept", "application/json")
+      .expect(200)
+      .then((res) => {
+        expect(res.body).to.be.an("array");
+      });
+  });
+});

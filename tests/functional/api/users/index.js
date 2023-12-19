@@ -7,6 +7,7 @@ import api from "../../../../index";
 const expect = chai.expect;
 let db;
 let user1token;
+let userId;
 
 describe("Users endpoint", () => {
   before(() => {
@@ -84,6 +85,21 @@ describe("Users endpoint", () => {
             });
         });
       });
+      describe("when the password does mot meet the requirements", () => {
+        it("should return a 400 status and the error message", () => {
+          return request(api)
+            .post("/api/users?action=register")
+            .send({
+              username: "user4",
+              password: "12345678",
+            })
+            .expect(400)
+            .expect({
+              success: false,
+              msg: "Password does not meet the requirements",
+            });
+        });
+      });
     });
     describe("For an authenticate action", () => {
       describe("when the payload is correct", () => {
@@ -100,6 +116,50 @@ describe("Users endpoint", () => {
               expect(res.body.token).to.not.be.undefined;
               user1token = res.body.token.substring(7);
             });
+        });
+      });
+      describe("when the password is incorrect", () => {
+        it("should return a 401 status and a error message", () => {
+          return request(api)
+            .post("/api/users?action=authenticate")
+            .send({
+              username: "user1",
+              password: "test1234@",
+            })
+            .expect(401)
+            .expect({ success: false, msg: "Wrong password." });
+        });
+      });
+      describe("when the user is unauthenticated", () => {
+        it("should return a 401 status and a error message", () => {
+          return request(api)
+            .post("/api/users?action=authenticate")
+            .send({
+              username: "user4",
+              password: "test1234@",
+            })
+            .expect(401)
+            .expect({
+              success: false,
+              msg: "Authentication failed. User not found.",
+            });
+        });
+      });
+    });
+  });
+  describe("PUT /api/users ", () => {
+    describe("For a update action", () => {
+      describe("when the id is incorrect", () => {
+        let userId = "658190b10589b4ee02c75b30";
+
+        it("should return a 404 status and the error message", () => {
+          return request(api)
+            .put(`/api/users/${userId}`)
+            .send({
+              password: "test222@",
+            })
+            .expect(404)
+            .expect({ code: 404, msg: "Unable to Update User" });
         });
       });
     });
