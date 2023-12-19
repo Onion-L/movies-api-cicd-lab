@@ -44,6 +44,7 @@ publish_coverage:
   stage: coverage
   script:
     - npm install coveralls
+    - npm run coverage-report
     - cat ./coverage/lcov.info | coveralls
   only:
     - develop
