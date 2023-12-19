@@ -20,7 +20,6 @@ stages:
   - install
   - build
   - test
-  - coverage
   - staging
 
 install_dependencies:
@@ -38,16 +37,11 @@ Build_api:
 test_api:
   stage: test
   script:
-    - npm run test:nyc
+    - npm run test
     - npm run coverage-report
-publish_coverage:
-  stage: coverage
-  script:
-    - npm install coveralls
-    - npm run coverage-report
-    - cat ./coverage/lcov.info | coveralls
-  only:
-    - develop
+    - npm run coveralls
+
+
 
 deploy_staging:
   image: ruby:latest
