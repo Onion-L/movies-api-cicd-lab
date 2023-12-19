@@ -37,10 +37,9 @@ Build_api:
 test_api:
   stage: test
   script:
-    - npm run test
-    - npm run coverage-report
+    - npm install
+    - npm test
     - npm run coveralls
-
 
 
 deploy_staging:
