@@ -39,8 +39,7 @@ test_api:
   stage: test
   script:
     - npm test
-    - nyc report --reporter=text-lcov > coverage.lcov
-
+    - npm run coverage-report
 publish_coverage:
   stage: coverage
   script:

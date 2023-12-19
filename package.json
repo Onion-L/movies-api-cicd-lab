@@ -25,7 +25,8 @@
     "postinstall": "rimraf ./build && npm run compile:all",
     "test": "cross-env NODE_ENV=test SEED_DB=true mocha",
     "test:nyc": "cross-env NODE_ENV=test SEED_DB=true nyc mocha",
-    "dev": "babel-node ./initialise-dev/initDevDB.js && nodemon --exec npm start"  
+    "dev": "babel-node ./initialise-dev/initDevDB.js && nodemon --exec npm start",
+    "coverage-report": "nyc report --reporter=text-lcov > coverage.lcov"
   },
   "author": "Diarmuid O Connor",
   "license": "ISC",
