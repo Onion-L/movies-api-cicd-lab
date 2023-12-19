@@ -38,7 +38,7 @@ Build_api:
 test_api:
   stage: test
   script:
-    - npm run test
+    - npm run test:nyc
     - npm run coverage-report
 publish_coverage:
   stage: coverage
