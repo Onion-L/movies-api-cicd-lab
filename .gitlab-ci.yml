@@ -1,39 +1,37 @@
-# Node docker image on which this would be run
 image: node:latest
 
 variables:
-   npm_config_cache: "$CI_PROJECT_DIR/.npm"
-   NODE_ENV: 'test'
+  npm_config_cache: "$CI_PROJECT_DIR/.npm"
+  NODE_ENV: 'test'
 
 cache:
-   key:
-     files:
-        - package.json
-   paths:
-      - .npm
-      - node_modules
-      - build
+  key:
+    files:
+      - package.json
+  paths:
+    - .npm
+    - node_modules
+    - build
 
 services:
-   - mongo
+  - mongo
 
 stages:
   - install
   - build
   - test
+  - coverage
   - staging
-
-# Jobs:
 
 install_dependencies:
   stage: install
   script:
-    - npm  ci
+    - npm ci
 
 Build_api:
   stage: build
   before_script:
-     - npm run clean
+    - npm run clean
   script:
     - npm run build
 
@@ -41,6 +39,15 @@ test_api:
   stage: test
   script:
     - npm test
+    - nyc report --reporter=text-lcov > coverage.lcov
+
+publish_coverage:
+  stage: coverage
+  script:
+    - npm install coveralls
+    - cat ./coverage/lcov.info | coveralls
+  only:
+    - develop
 
 deploy_staging:
   image: ruby:latest
@@ -51,6 +58,6 @@ deploy_staging:
     - apt-get update -qy
     - apt-get install -y ruby-dev
     - gem install dpl
-  script:  
+  script:
     - dpl --provider=heroku --app=$HEROKU_APP_NAME_STAGING --api-key=$HEROKU_API_KEY
     - echo "Deployed to staging server"
