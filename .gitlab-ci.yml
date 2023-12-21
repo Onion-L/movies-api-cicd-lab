@@ -78,9 +78,12 @@ deploy_production_manual:
 deploy_production_auto:
   stage: production
   image: ruby:latest
+  before_script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
   script:
-    - npm install dpl
-    - echo "Deploying to production environment (Auto)"
     - dpl --provider=heroku --app=$HEROKU_APP_NAME_PRODUCTION --api-key=$HEROKU_API_KEY
+    - echo "Deployed to production server"
   only:
     - main
