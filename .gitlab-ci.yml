@@ -59,16 +59,16 @@ deploy_staging:
 
 deploy_production_manual:
   stage: production
-  before_script:
-    - apt-get update -qy
-    - apt-get install -y ruby-dev
-    - gem install dpl
+  image: node:latest
   script:
-    - echo "Deploying to production environment (Manual)"
-    - dpl --provider=heroku --app=$HEROKU_APP_NAME_PRODUCTION --api-key=$HEROKU_API_KEY
+    - npm install -g heroku
+    - heroku login -i
+    - heroku git:remote -a $HEROKU_APP_NAME_PRODUCTION
+    - git push heroku HEAD:master
   when: manual
   only:
     - develop
+
 
 
 deploy_production_auto:
