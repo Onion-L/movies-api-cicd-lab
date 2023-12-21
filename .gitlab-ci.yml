@@ -46,6 +46,7 @@ deploy_staging:
   image: ruby:latest
   only:
     - develop
+    - main
   stage: staging
   before_script:
     - apt-get update -qy
@@ -54,3 +55,22 @@ deploy_staging:
   script:
     - dpl --provider=heroku --app=$HEROKU_APP_NAME_STAGING --api-key=$HEROKU_API_KEY
     - echo "Deployed to staging server"
+
+deploy_production_manual:
+  stage: production
+  image: ruby:latest
+  script:
+    - echo "Deploying to production environment (Manual)"
+    - dpl --provider=heroku --app=$HEROKU_APP_NAME_PRODUCTION --api-key=$HEROKU_API_KEY
+  when: manual
+  only:
+    - develop
+
+deploy_production_auto:
+  stage: production
+  image: ruby:latest
+  script:
+    - echo "Deploying to production environment (Auto)"
+    - dpl --provider=heroku --app=$HEROKU_APP_NAME_PRODUCTION --api-key=$HEROKU_API_KEY
+  only:
+    - main
