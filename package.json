@@ -26,7 +26,7 @@
     "test": "cross-env NODE_ENV=test SEED_DB=true nyc mocha",
     "dev": "babel-node ./initialise-dev/initDevDB.js && nodemon --exec npm start",
     "coverage-report": "nyc report --reporter=text-lcov > coverage.lcov",
-    "coveralls": "nyc --reporter=lcov mocha --reporter spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+    "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls"
   },
   "author": "Diarmuid O Connor",
   "license": "ISC",
