@@ -62,12 +62,12 @@ deploy_production_manual:
   image: node:latest
   script:
     - npm install -g heroku
-    - heroku login -i
     - heroku git:remote -a $HEROKU_APP_NAME_PRODUCTION
     - git push heroku HEAD:master
   when: manual
   only:
     - develop
+
 
 
 
