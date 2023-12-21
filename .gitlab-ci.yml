@@ -59,7 +59,6 @@ deploy_staging:
 
 deploy_production_manual:
   stage: production
-  image: ruby:latest
   script:
     - gem install dpl
     - echo "Deploying to production environment (Manual)"
@@ -67,6 +66,7 @@ deploy_production_manual:
   when: manual
   only:
     - develop
+
 
 deploy_production_auto:
   stage: production
