@@ -1,8 +1,8 @@
-# Assignment 2 - Agile Software Practice.
+# Assignment 2 - Agile Software Practice
 
-Name: [your name] ...
+Name: Xiang Li 20095236
 
-## API endpoints.
+## API endpoints
 
 [List the Web API's endpoints and state the purpose of each one. Indicate those that require authentication.]
  
