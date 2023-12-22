@@ -62,29 +62,6 @@ describe("Users endpoint", () => {
 
   describe("POST /api/users ", () => {
     describe("For a register action", () => {
-      describe("when the payload is correct", () => {
-        it("should return a 201 status and the confirmation message", () => {
-          return request(api)
-            .post("/api/users?action=register")
-            .send({
-              username: "user3",
-              password: "test123@",
-            })
-            .expect(201)
-            .expect({ msg: "User successfully created.", success: true });
-        });
-        after(() => {
-          return request(api)
-            .get("/api/users")
-            .set("Accept", "application/json")
-            .expect(200)
-            .then((res) => {
-              expect(res.body.length).to.equal(3);
-              const result = res.body.map((user) => user.username);
-              expect(result).to.have.members(["user1", "user2", "user3"]);
-            });
-        });
-      });
       describe("when the password does mot meet the requirements", () => {
         it("should return a 400 status and the error message", () => {
           return request(api)
@@ -102,22 +79,6 @@ describe("Users endpoint", () => {
       });
     });
     describe("For an authenticate action", () => {
-      describe("when the payload is correct", () => {
-        it("should return a 200 status and a generated token", () => {
-          return request(api)
-            .post("/api/users?action=authenticate")
-            .send({
-              username: "user1",
-              password: "test123@",
-            })
-            .expect(200)
-            .then((res) => {
-              expect(res.body.success).to.be.true;
-              expect(res.body.token).to.not.be.undefined;
-              user1token = res.body.token.substring(7);
-            });
-        });
-      });
       describe("when the password is incorrect", () => {
         it("should return a 401 status and a error message", () => {
           return request(api)

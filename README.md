@@ -5,63 +5,77 @@ Name: Xiang Li 20095236
 ## API endpoints
 
 [List the Web API's endpoints and state the purpose of each one. Indicate those that require authentication.]
- 
+
  e.g.
 
 + GET api/movies/:id - get the details of a specific movie.
 + POST api/movies/:id/reviews (Auth) - Add a review for a movie.
 + GET api/movies?page=n&limit=m - Get m list of movies from TMDB's Discover endpoint, starting at page n and limit the list size to m.  
 + POST api/:userName/favourites (Auth) - add a movie to the named user's favourites list.
-+ POST /api/users?action=action - Register or authenticate a user - set action to register or login. 
++ POST /api/users?action=action - Register or authenticate a user - set action to register or login.
 + etc
 + etc
 
-## Automated Testing.
+## Automated Testing
 
-[In this section, include a listing of the response from running your tests locally (npm run test). Simply copy the output from your terminal and paste it into a fenced block (the triple tilda markup, i.e. ~~~ ), as shown below - do not use a screenshot.]
-
-e.g. 
-~~~
   Users endpoint
-    GET /api/users 
-      ✓ should return all the users and a status 200 (183ms)
-    POST /api/users 
-      For the register action
-        when the payload is correct
-          ✓ should return a 201 status and the confirmation message (368ms)
-      For the authenticate action
-        when the payload is correct
-          ✓ should return a 200 status and a generated token (340ms)
+    GET /api/users
+database connected to test on ac-czmm0nr-shard-00-00.rllhesx.mongodb.net
+      √ should return the 2 users and a status 200 (245ms)
+    POST /api/users
+      For a register action
+        when the password does mot meet the requirements
+          √ should return a 400 status and the error message
+      For an authenticate action
+        when the password is incorrect
+          √ should return a 401 status and a error message (294ms)
+        when the user is unauthenticated
+          √ should return a 401 status and a error message (237ms)
+    PUT /api/users
+      For a update action
+        when the id is incorrect
+          √ should return a 404 status and the error message (241ms)
 
   Movies endpoint
-    GET /api/movies 
-      ✓ should return 20 movies and a status 200 (113ms)
-    GET /api/movies/:id
+    GET /api/movies without TOKEN
+      √ should return 500 status
+    GET /api/movies/:id without TOKEN
       when the id is valid
-        ✓ should return the matching movie (53ms)
+        √ should return 500 status
       when the id is invalid
-        ✓ should return the NOT found message (55ms)
+{ username: 'user1', iat: 1703205031 }
+        √ should return the NOT found message (462ms)
+    GET /api/movies with TOKEN
+{ username: 'user1', iat: 1703205033 }
+      √ should return 20 movies and a status 200 (473ms)
+    GET /api/movies/:id with TOKEN
+      when the id is valid
+{ username: 'user1', iat: 1703205035 }
+        √ should return the matching movie (466ms)
+      when the id is invalid
+{ username: 'user1', iat: 1703205037 }
+        √ should return the NOT found message (467ms)
+    GET /api/movies/tmdb/upcoming
+      √ should return upcoming movies and a status 200
+    GET /api/movies/tmdb/genres
+      √ should return movie genres and a status 200
 
+  TMDB API tests
+    √ getUpcomingMovies should return movies
+    √ getGenres should return genres
 
-  6 passing (6s)
-~~~
+  15 passing (24s)
 
-[ Markdown Tip: By wrapping the test results in fences (~~~), GitHub will display it in a 'box' and preserve any formatting.]
-
-NOTE: Your test code should only contain the test cases you implemented. Your assignment submission  must remove the test cases (it blocks) developed in the labs.
-
-## Deployments.
+## Deployments
 
 Specify the URLs of your deployments, both staging and production, e.g.
 
-https://movies-api-staging-doc-9200283e0b04.herokuapp.com/api/movies
+<https://movies-api-staging-doc-9200283e0b04.herokuapp.com/api/movies>
 
 [ I do NOT need the URL of the app on your Heroku dashboard as this is private, e.g.
 
-https://dashboard.heroku.com/apps/movies-api-staging-doc ]
+<https://dashboard.heroku.com/apps/movies-api-staging-doc> ]
 
 ## Independent Learning (if relevant)
 
-Sspecify the URL of the Coveralls webpage that contains your tests' code coverage metrics.
-
-State any other independent learning you achieved while completing this assignment.
+Coveralls:<https://coveralls.io/gitlab/Onion-L/movies-api-cicd-lab>
