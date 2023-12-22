@@ -56,26 +56,26 @@ describe("Movies endpoint", () => {
   afterEach(() => {
     api.close(); // Release PORT 8080
   });
-  describe("GET /api/movies without TOKEN", () => {
+  describe("GET /auth/movies without TOKEN", () => {
     it("should return 500 status", () => {
       request(api)
-        .get("/api/movies")
+        .get("/auth/movies")
         .set("Accept", "application/json")
         .expect(500);
     });
   });
-  describe("GET /api/movies/:id without TOKEN", () => {
+  describe("GET /auth/movies/:id without TOKEN", () => {
     describe("when the id is valid", () => {
       it("should return 500 status", () => {
         return request(api)
-          .get(`/api/movies/${movies[0].id}`)
+          .get(`/auth/movies/${movies[0].id}`)
           .set("Accept", "application/json");
       });
     });
     describe("when the id is invalid", () => {
       it("should return the NOT found message", () => {
         return request(api)
-          .get("/api/movies/9999")
+          .get("/auth/movies/9999")
           .set("Accept", "application/json")
           .set("Authorization", `Bearer ${userToken}`)
           .expect(404)
@@ -87,10 +87,10 @@ describe("Movies endpoint", () => {
     });
   });
 
-  describe("GET /api/movies with TOKEN", () => {
+  describe("GET /auth/movies with TOKEN", () => {
     it("should return 20 movies and a status 200", (done) => {
       request(api)
-        .get("/api/movies")
+        .get("/auth/movies")
         .set("Accept", "application/json")
         .set("Authorization", `Bearer ${userToken}`)
         .expect(200)
@@ -101,11 +101,11 @@ describe("Movies endpoint", () => {
         });
     });
   });
-  describe("GET /api/movies/:id with TOKEN", () => {
+  describe("GET /auth/movies/:id with TOKEN", () => {
     describe("when the id is valid", () => {
       it("should return the matching movie", () => {
         return request(api)
-          .get(`/api/movies/${movies[0].id}`)
+          .get(`/auth/movies/${movies[0].id}`)
           .set("Accept", "application/json")
           .set("Authorization", `Bearer ${userToken}`)
           .expect(200)
@@ -117,7 +117,7 @@ describe("Movies endpoint", () => {
     describe("when the id is invalid", () => {
       it("should return the NOT found message", () => {
         return request(api)
-          .get("/api/movies/9999")
+          .get("/auth/movies/9999")
           .set("Accept", "application/json")
           .set("Authorization", `Bearer ${userToken}`)
           .expect(404)
@@ -128,10 +128,10 @@ describe("Movies endpoint", () => {
       });
     });
   });
-  describe("GET /api/movies/tmdb/upcoming", () => {
+  describe("GET /auth/movies/tmdb/upcoming", () => {
     it("should return upcoming movies and a status 200", () => {
       request(api)
-        .get("/api/movies/tmdb/upcoming")
+        .get("/auth/movies/tmdb/upcoming")
         .set("Accept", "application/json")
         .expect(200)
         .then((err, res) => {
@@ -139,10 +139,10 @@ describe("Movies endpoint", () => {
         });
     });
   });
-  describe("GET /api/movies/tmdb/genres", () => {
+  describe("GET /auth/movies/tmdb/genres", () => {
     it("should return movie genres and a status 200", () => {
       request(api)
-        .get("/api/movies/tmdb/genres")
+        .get("/auth/movies/tmdb/genres")
         .set("Accept", "application/json")
         .expect(200)
         .then((res) => {
