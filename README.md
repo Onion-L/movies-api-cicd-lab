@@ -4,77 +4,72 @@ Name: Xiang Li 20095236
 
 ## API endpoints
 
-[List the Web API's endpoints and state the purpose of each one. Indicate those that require authentication.]
-
- e.g.
-
-+ GET api/movies/:id - get the details of a specific movie.
-+ POST api/movies/:id/reviews (Auth) - Add a review for a movie.
-+ GET api/movies?page=n&limit=m - Get m list of movies from TMDB's Discover endpoint, starting at page n and limit the list size to m.  
-+ POST api/:userName/favourites (Auth) - add a movie to the named user's favourites list.
-+ POST /api/users?action=action - Register or authenticate a user - set action to register or login.
-+ etc
-+ etc
++ __Authenticate__
+  + GET auth/movies/:id - Retrieves details of a specific movie by its ID.
+  + GET auth/movies?page=n&limit=m - Fetches a list of movies from TMDB's Discover endpoint, starting at page n with a limit of m movies per page.
+  + GET auth/movies/tmdb/upcoming - Accesses upcoming movies data from TMDB.
+  +GET auth/movies/tmdb/genres - Retrieves movie genres from TMDB.
++ __Movie API__
+  + GET api/movies/:id - Retrieves details of a specific movie by its ID.
+  + GET api/movies?page=n&limit=m - Fetches a list of movies from TMDB's Discover endpoint, starting at page n with a limit of m movies per page.
+  + GET api/movies/tmdb/upcoming - Accesses upcoming movies data from TMDB.
+  + GET api/movies/tmdb/genres - Retrieves movie genres from TMDB.
++ __User__
+  + GET /api/users - Retrieves all registered users.
+  + POST /api/users - Depending on the query parameter (`register` or login), registers a new user or authenticates an existing one. It includes password validation.
+  + PUT /api/users/:id - Updates a user's information based on their ID.
 
 ## Automated Testing
 
   Users endpoint
     GET /api/users
 database connected to test on ac-czmm0nr-shard-00-00.rllhesx.mongodb.net
-      √ should return the 2 users and a status 200 (245ms)
+      √ should return the 2 users and a status 200 (238ms)
     POST /api/users
       For a register action
         when the password does mot meet the requirements
           √ should return a 400 status and the error message
       For an authenticate action
         when the password is incorrect
-          √ should return a 401 status and a error message (294ms)
+          √ should return a 401 status and a error message (286ms)
         when the user is unauthenticated
-          √ should return a 401 status and a error message (237ms)
+          √ should return a 401 status and a error message (235ms)
     PUT /api/users
       For a update action
         when the id is incorrect
-          √ should return a 404 status and the error message (241ms)
+          √ should return a 404 status and the error message (277ms)
 
   Movies endpoint
-    GET /api/movies without TOKEN
+    GET /auth/movies without TOKEN
       √ should return 500 status
-    GET /api/movies/:id without TOKEN
+    GET /auth/movies/:id without TOKEN
       when the id is valid
         √ should return 500 status
       when the id is invalid
-{ username: 'user1', iat: 1703205031 }
-        √ should return the NOT found message (462ms)
-    GET /api/movies with TOKEN
-{ username: 'user1', iat: 1703205033 }
-      √ should return 20 movies and a status 200 (473ms)
-    GET /api/movies/:id with TOKEN
+        √ should return the NOT found message (477ms)
+    GET /auth/movies with TOKEN
+      √ should return 20 movies and a status 200 (512ms)
+    GET /auth/movies/:id with TOKEN
       when the id is valid
-{ username: 'user1', iat: 1703205035 }
-        √ should return the matching movie (466ms)
+        √ should return the matching movie (533ms)
       when the id is invalid
-{ username: 'user1', iat: 1703205037 }
-        √ should return the NOT found message (467ms)
-    GET /api/movies/tmdb/upcoming
+        √ should return the NOT found message (528ms)
+    GET /auth/movies/tmdb/upcoming
       √ should return upcoming movies and a status 200
-    GET /api/movies/tmdb/genres
+    GET /auth/movies/tmdb/genres
       √ should return movie genres and a status 200
 
   TMDB API tests
     √ getUpcomingMovies should return movies
     √ getGenres should return genres
 
-  15 passing (24s)
+
+  15 passing (25s)
 
 ## Deployments
 
-Specify the URLs of your deployments, both staging and production, e.g.
-
-<https://movies-api-staging-doc-9200283e0b04.herokuapp.com/api/movies>
-
-[ I do NOT need the URL of the app on your Heroku dashboard as this is private, e.g.
-
-<https://dashboard.heroku.com/apps/movies-api-staging-doc> ]
+Staging: <https://movies-api-staging-xiang-li-fa29097a8733.herokuapp.com/api/movies>
+Production: <https://movies-api-production-xiang-li-f54aaac99a53.herokuapp.com/api/movies>
 
 ## Independent Learning (if relevant)
 
