@@ -69,13 +69,14 @@ describe("Movies endpoint", () => {
       it("should return 500 status", () => {
         return request(api)
           .get(`/auth/movies/${movies[0].id}`)
-          .set("Accept", "application/json");
+          .set("Accept", "application/json")
+          .expect(500);
       });
     });
     describe("when the id is invalid", () => {
       it("should return the NOT found message", () => {
         return request(api)
-          .get("/auth/movies/9999")
+          .get("/auth/movies/999999")
           .set("Accept", "application/json")
           .set("Authorization", `Bearer ${userToken}`)
           .expect(404)
@@ -126,28 +127,6 @@ describe("Movies endpoint", () => {
             message: "The movie you requested could not be found.",
           });
       });
-    });
-  });
-  describe("GET /auth/movies/tmdb/upcoming", () => {
-    it("should return upcoming movies and a status 200", () => {
-      request(api)
-        .get("/auth/movies/tmdb/upcoming")
-        .set("Accept", "application/json")
-        .expect(200)
-        .then((err, res) => {
-          expect(res.body).to.be.an("array");
-        });
-    });
-  });
-  describe("GET /auth/movies/tmdb/genres", () => {
-    it("should return movie genres and a status 200", () => {
-      request(api)
-        .get("/auth/movies/tmdb/genres")
-        .set("Accept", "application/json")
-        .expect(200)
-        .then((res) => {
-          expect(res.body).to.be.an("array");
-        });
     });
   });
 });

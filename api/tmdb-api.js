@@ -1,25 +1,45 @@
-import fetch from "node-fetch";
+import { fetchData, fetchPageData } from "../util/fetchData";
 
-export const getUpcomingMovies = async () => {
-  const response = await fetch(
-    `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.TMDB_KEY}&language=en-US&page=1`
-  );
-
-  if (!response.ok) {
-    throw new Error(response.json().message);
-  }
-
-  return await response.json();
+export const getMovies = async (page) => {
+  return fetchPageData("discover/movie", page);
 };
 
-export const getGenres = async () => {
-  const response = await fetch(
-    `https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.TMDB_KEY}&language=en-US&page=1`
-  );
+export const getMovie = async (id) => {
+  return fetchData(`movie/${id}`);
+};
 
-  if (!response.ok) {
-    throw new Error(response.json().message);
-  }
+export const getMovieImages = (id) => {
+  return fetchData(`movie/${id}/images`);
+};
 
-  return await response.json();
+export const getUpcomingMovies = async () => {
+  return fetchData("movie/upcoming");
+};
+
+export const getLatestMovies = () => {
+  return fetchData("movie/now_playing");
+};
+
+export const getMovieReviews = (id) => {
+  return fetchData(`movie/${id}/reviews`);
+};
+
+export const getTrend = (page) => {
+  return fetchPageData("trending/movie/day", page);
+};
+
+export const getPeople = () => {
+  return fetchData("person/popular");
+};
+
+export const getPersonDetail = (id) => {
+  return fetchData(`person/${id}`);
+};
+
+export const getCredits = (id) => {
+  return fetchData(`movie/${id}/credits`);
+};
+
+export const getMovieCredits = (id) => {
+  return fetchData(`person/${id}/movie_credits`);
 };

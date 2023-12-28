@@ -1,10 +1,12 @@
 import userModel from "../api/users/userModel";
 import users from "./users";
 import dotenv from "dotenv";
-// import genreModel from "../api/genres/genreModel";
 import genres from "./genres";
 import movieModel from "../api/movies/movieModel";
+import genreModel from "../api/genres/genresModel.js";
 import movies from "./movies.js";
+import languages from "./languages.js";
+import langModel from "../api/languages/langModel.js";
 
 dotenv.config();
 
@@ -34,7 +36,33 @@ export async function loadMovies() {
   }
 }
 
+export async function loadGenres() {
+  console.log("load seed data");
+  console.log(genres.length);
+  try {
+    await genreModel.deleteMany();
+    await genreModel.collection.insertMany(genres);
+    console.info(`${genres.length} Genres were successfully stored.`);
+  } catch (err) {
+    console.error(`failed to Load genres Data: ${err}`);
+  }
+}
+
+export async function loadLang() {
+  console.log("load seed data");
+  console.log(languages.length);
+  try {
+    await langModel.deleteMany();
+    await langModel.collection.insertMany(languages);
+    console.info(`${languages.length} Genres were successfully stored.`);
+  } catch (err) {
+    console.error(`failed to Load genres Data: ${err}`);
+  }
+}
+
 if (process.env.NODE_ENV === "development") {
   loadUsers();
-  loadMovies(); //ADD THIS LINE
+  loadMovies();
+  loadGenres();
+  loadLang();
 }
