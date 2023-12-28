@@ -74,4 +74,4 @@ Production: <https://movies-api-production-xiang-li-f54aaac99a53.herokuapp.com/a
 ## Independent Learning (if relevant)
 
 Coveralls:<https://coveralls.io/gitlab/Onion-L/movies-api-cicd-lab>
-[![Coverage Status](https://coveralls.io/repos/gitlab/Onion-L/movies-api-cicd-lab/badge.svg?branch=)](https://coveralls.io/gitlab/Onion-L/movies-api-cicd-lab?branch=)
+[![Coverage Status](https://coveralls.io/repos/gitlab/Onion-L/movies-api-cicd-lab/badge.svg?branch=)](https://coveralls.io/gitlab/Onion-L/movies-api-cicd-lab?branch=main)
